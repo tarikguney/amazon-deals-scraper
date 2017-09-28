@@ -37,7 +37,7 @@ CDP((client) => {
         console.log(a.result.value);
 
         // writeToFile(a.result.value);
-        
+
         client.close();
       });
     }, 2000);
@@ -47,7 +47,11 @@ CDP((client) => {
 });
 
 function injectjQuery(Runtime) {
-  Runtime.evaluate({ expression: "var jq = document.createElement('script');jq.src = \"https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js\";document.getElementsByTagName('head')[0].appendChild(jq);jQuery.noConflict();" })
+  Runtime.evaluate({
+    expression: `var jq = document.createElement('script');
+  jq.src = \"https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js\";
+  document.getElementsByTagName('head')[0].appendChild(jq);
+  jQuery.noConflict();` })
 }
 
 function writeToFile(content) {
