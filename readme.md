@@ -7,6 +7,7 @@ This script is to scrape Amazon Deals page. Read the following instructions to s
 1. Download NodeJS first from the following link: https://nodejs.org/en/download/ for your operating system. (e.g, Choose Mac if you are using Mac)
 2. Make sure that you have the latest Google Chrome installed. At the time, this script was developed, Google Chrome 61 was used.
 3. Download by clicking the button shown below:
+
 ![Download](download.png)
 4. Unzip and change your directory to wherever you unzipped it using your terminal.
 5. Run the following command `node main.js`.
