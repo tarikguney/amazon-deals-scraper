@@ -12,37 +12,28 @@ CDP((client) => {
     return Page.navigate({ url: 'https://www.amazon.com/gp/goldbox' });
   });
 
+  for (var a in Page.ViewPort) {
+    console.log(a)
+  }
+
+  // Set up viewport resolution, etc.
+  const deviceMetrics = {
+    width: 3000,
+    height: 3000,
+    deviceScaleFactor: 1,
+    mobile: false,
+    fitWindow: false,
+  };
+
+  Page.setDeviceMetricsOverride(deviceMetrics);
+
   // Evaluate outerHTML after page has loaded.
   Page.loadEventFired(() => {
 
     injectjQuery(Runtime);
-
     Runtime.evaluate({ expression: "window.scrollTo(0, document.body.scrollHeight)" });
+    scrapeAmazonDeals(Runtime, client);
 
-    var expression = `
-      (function(){
-        var items = jQuery("div.a-row.dealContainer.dealTile");
-        var deals = [];
-        items.each(function(i,v){
-            var item = { 
-                name: jQuery(v).find("#dealTitle").text().trim(),
-                ends:jQuery(v).find("span[id*='dealClock']").text().trim(),
-                price:jQuery(v).find("div.a-row.priceBlock.unitLineHeight > span").text().trim()
-            };
-            deals[i] = item
-        });
-        return deals;
-    })();
-    `;
-
-    setTimeout(function () {
-      Runtime.evaluate({ expression: expression, returnByValue:true }).then((a) => {
-        writeToFile(JSON.stringify(a.result.value));
-        console.log(a.result.value.length);
-        //console.log(a.result.value);
-        client.close();
-      });
-    }, 4000);
   });
 }).on('error', (err) => {
   console.error('Cannot connect to browser:', err);
@@ -65,3 +56,30 @@ function writeToFile(content) {
     }
   });
 }
+
+function scrapeAmazonDeals(Runtime, client) {
+    var expression = `
+        (function(){
+          var items = jQuery("div.a-row.dealContainer.dealTile");
+          var deals = [];
+          items.each(function(i,v){
+              var item = { 
+                  name: jQuery(v).find("#dealTitle").text().trim(),
+                  ends:jQuery(v).find("span[id*='dealClock']").text().trim(),
+                  price:jQuery(v).find("div.a-row.priceBlock.unitLineHeight > span").text().trim()
+              };
+              deals[i] = item
+          });
+          return deals;
+      })();
+  `;
+
+    setTimeout(function () {
+      Runtime.evaluate({ expression: expression, returnByValue: true }).then((a) => {
+        writeToFile(JSON.stringify(a.result.value));
+        console.log(a.result.value.length);
+        //console.log(a.result.value);
+        client.close();
+      });
+    }, 1000);
+};
