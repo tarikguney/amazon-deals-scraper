@@ -17,30 +17,32 @@ CDP((client) => {
 
     injectjQuery(Runtime);
 
-    Runtime.evaluate({ expression: "window.scrollTo(0, document.body.scrollHeight)" })
+    Runtime.evaluate({ expression: "window.scrollTo(0, document.body.scrollHeight)" });
+
+    var expression = `
+      (function(){
+        var items = jQuery("div.a-row.dealContainer.dealTile");
+        var deals = [];
+        items.each(function(i,v){
+            var item = { 
+                name: jQuery(v).find("#dealTitle").text().trim(),
+                ends:jQuery(v).find("span[id*='dealClock']").text().trim(),
+                price:jQuery(v).find("div.a-row.priceBlock.unitLineHeight > span").text().trim()
+            };
+            deals[i] = item
+        });
+        return deals;
+    })();
+    `;
+
     setTimeout(function () {
-      Runtime.evaluate({ expression: 'jQuery(".dealContainer").toArray().length' }).then((a) => {
-
-        console.log("---------------- TRAVERSING ROOT OBJECT ---------------------------")
-        for (var b in a) {
-          console.log(b)
-        }
-        console.log("---------------- TRAVERSION RESULT PROPERTY -----------------------")
-        for (var b in a.result) {
-          console.log(b)
-        }
-        console.log("---------------- TRAVERSING VALUES OF RESULT PROPERTY -------------")
-        for (var b in a.result) {
-          console.log(a.result[b])
-        }
-        console.log("---------------- SHOWING THE RESULT -------------------------------")
-        console.log(a.result.value);
-
-        // writeToFile(a.result.value);
-
+      Runtime.evaluate({ expression: expression, returnByValue:true }).then((a) => {
+        writeToFile(JSON.stringify(a.result.value));
+        console.log(a.result.value.length);
+        //console.log(a.result.value);
         client.close();
       });
-    }, 2000);
+    }, 4000);
   });
 }).on('error', (err) => {
   console.error('Cannot connect to browser:', err);
@@ -55,7 +57,7 @@ function injectjQuery(Runtime) {
 }
 
 function writeToFile(content) {
-  fs.writeFile("OutputFile.txt", content, function (error) {
+  fs.writeFile("result.js", content, function (error) {
     if (error != null) {
       console.log(error);
     } else {
