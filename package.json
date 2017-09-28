@@ -1,5 +1,5 @@
 {
-  "name": "headless",
+  "name": "amazon-deals-scraper",
   "version": "1.0.0",
   "description": "This script is to scrape Amazon Deals page. Read the following instructions to see how to use it.",
   "main": "main.js",
