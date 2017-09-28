@@ -21,3 +21,19 @@ You can use various tools to parse JSON format and consume it within them howeve
 ## Notes
 
 After you install NodeJS, please restart your terminal if it is open.
+
+# Important
+
+If you are running into "connection refused" problem, then you need to have a running instance of Google Chrome with the following settings:
+
+### Windows
+
+Right click the Chrome shortcut, and select properties In the "target" field, append `--remote-debugging-port=9222` Or in a command prompt, execute `[Your Chrome Installation Dir]/chrome.exe --remote-debugging-port=9222`
+
+### OS X
+
+In a terminal, execute `/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222 --disabled-gpu=true`
+
+### Linux
+
+In a terminal, launch `google-chrome --remote-debugging-port=9222`
