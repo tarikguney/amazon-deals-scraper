@@ -4,14 +4,18 @@ This script is to scrape Amazon Deals page. Read the following instructions to s
 
 # How to use it?
 
-1. Download NodeJS first from the following link: https://nodejs.org/en/download/ for your operating system. (e.g, Choose Mac if you are using Mac)
-2. Make sure that you have the latest Google Chrome installed. At the time, this script was developed, Google Chrome 61 was used.
-3. Download by clicking the button shown below:
+1. Download NodeJS first from the following link: https://nodejs.org/en/download/ for your operating system. (e.g, choose Mac if you are using Mac)
+1. Make sure that you have the latest Google Chrome installed. At the time this script was developed, the latest version of Google Chrome was 61. So use something newer or equal to 61.
+1. Download by clicking the button shown below:
 
-![Download](download.png)
-4. Unzip and change your directory to wherever you unzipped it using your terminal.
-5. Run the following command `node main.js`.
-6. Once the script is done executing, you will see a new file created named `result.js`, and just open it. You will see a result in JSON format. Use it however you like.
+   ![Download](download.png)
+
+1. Unzip the downloaded file.
+1. Change your directory to wherever you unzipped it using your terminal.
+1. Run the following command `node main.js` on your terminal while you are in the same directory.
+1. Once the script is done executing, you will see a new file created named `result.js`, and just open it using a text editor. You will see a result in JSON format. Use it however you like.
+
+You can use various tools to parse JSON format and consume it within them however you like. It is a very versatile format and can be presented in various shapes and forms using existing tools. For instance, a primitive tool that just formats JSON text into a more readable format is http://jsonviewer.stack.hu/
 
 ## Notes
 
