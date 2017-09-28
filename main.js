@@ -52,7 +52,7 @@ function writeToFile(content) {
     if (error != null) {
       console.log(error);
     } else {
-      console.log("OutputFile.txt has been saved...");
+      console.log("A file named Results.js has been saved with content retrieved from given website.");
     }
   });
 }
