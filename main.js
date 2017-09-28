@@ -18,29 +18,37 @@ CDP((client) => {
     injectjQuery(Runtime);
 
     Runtime.evaluate({ expression: "window.scrollTo(0, document.body.scrollHeight)" })
-    setTimeout(function () {
-      Runtime.evaluate({ expression: 'jQuery(".dealContainer").toArray().length' }).then((a) => {
-
-        console.log("---------------- TRAVERSING ROOT OBJECT ---------------------------")
-        for (var b in a) {
-          console.log(b)
-        }
-        console.log("---------------- TRAVERSION RESULT PROPERTY -----------------------")
-        for (var b in a.result) {
-          console.log(b)
-        }
-        console.log("---------------- TRAVERSING VALUES OF RESULT PROPERTY -------------")
-        for (var b in a.result) {
-          console.log(a.result[b])
-        }
-        console.log("---------------- SHOWING THE RESULT -------------------------------")
-        console.log(a.result.value);
-
-        // writeToFile(a.result.value);
-
-        client.close();
+ 
+    client.DOM.getDocument((error, params) => {
+      if (error) {
+          console.error(params);
+          return;
+      }
+      const options = {
+          nodeId: params.root.nodeId,
+          selector: `div[id*='_dealView_'`
+      };
+      client.DOM.querySelectorAll(options, (error, params) => {
+          if (error) {
+              console.error(params);
+              return;
+          }
+          params.nodeIds.forEach((nodeId) => {
+              const options = {
+                  nodeId: nodeId
+              };
+              client.DOM.getAttributes(options, (error, params) => {
+                  if (error) {
+                      console.error(params);
+                      return;
+                  }
+                  console.log(params.attributes);
+              });
+          });
       });
-    }, 2000);
+  });
+
+
   });
 }).on('error', (err) => {
   console.error('Cannot connect to browser:', err);
