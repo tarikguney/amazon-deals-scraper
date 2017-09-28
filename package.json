@@ -1,0 +1,24 @@
+{
+  "name": "headless",
+  "version": "1.0.0",
+  "description": "This script is to scrape Amazon Deals page. Read the following instructions to see how to use it.",
+  "main": "main.js",
+  "dependencies": {
+    "chrome-remote-interface": "^0.25.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atarikguney/amazon-deals-scraper.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/atarikguney/amazon-deals-scraper/issues"
+  },
+  "homepage": "https://github.com/atarikguney/amazon-deals-scraper#readme"
+}
