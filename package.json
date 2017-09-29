@@ -5,6 +5,7 @@
   "main": "main.js",
   "dependencies": {
     "chrome-remote-interface": "^0.25.0",
+    "json2xls": "^0.1.2",
     "tableify": "^1.1.0"
   },
   "devDependencies": {},

@@ -1,6 +1,7 @@
 const CDP = require('chrome-remote-interface');
 const fs = require("fs")
 const table = require("tableify")
+const json2xls = require("json2xls")
 
 CDP((client) => {
   // Extract used DevTools domains.
@@ -48,14 +49,18 @@ function injectjQuery(Runtime) {
     jQuery.noConflict();` })
 }
 
-function writeToFile(content) {
-  fs.writeFile("result.html", content, function (error) {
-    if (error != null) {
-      console.log(error);
-    } else {
-      console.log("A file named Results.js has been saved with content retrieved from given website.");
-    }
-  });
+function writeToExcelFile(content) {
+  var xls = json2xls(content,{});
+  fs.writeFileSync('data.xlsx', xls, 'binary');
+
+  console.log("A file named Results.js has been saved with content retrieved from given website.");
+  // fs.writeFile("result.xlsx", xls, function (error) {
+  //   if (error != null) {
+  //     console.log(error);
+  //   } else {
+  //     console.log("A file named Results.js has been saved with content retrieved from given website.");
+  //   }
+  // });
 }
 
 function scrapeAmazonDeals(Runtime, client) {
@@ -77,8 +82,9 @@ function scrapeAmazonDeals(Runtime, client) {
 
     setTimeout(function () {
       Runtime.evaluate({ expression: expression, returnByValue: true }).then((a) => {
+        //var xls = json2xls(a.result.value);
         //writeToFile(JSON.stringify(a.result.value));
-        writeToFile(table(a.result.value));
+        writeToExcelFile(table(a.result.value));
         console.log("The amount of deals fetched: " + a.result.value.length);
         client.close();
       });
