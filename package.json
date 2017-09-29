@@ -4,11 +4,15 @@
   "description": "This script is to scrape Amazon Deals page. Read the following instructions to see how to use it.",
   "main": "main.js",
   "dependencies": {
-    "chrome-remote-interface": "^0.25.0"
+    "chrome-remote-interface": "^0.25.0",
+    "tableify": "^1.1.0"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js",
+    "prestart": "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --headless --remote-debugging-port=9222 --disabled-gpu &",
+    "poststarat": ""
   },
   "repository": {
     "type": "git",

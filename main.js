@@ -1,5 +1,6 @@
 const CDP = require('chrome-remote-interface');
 const fs = require("fs")
+const table = require("tableify")
 
 CDP((client) => {
   // Extract used DevTools domains.
@@ -48,7 +49,7 @@ function injectjQuery(Runtime) {
 }
 
 function writeToFile(content) {
-  fs.writeFile("result.js", content, function (error) {
+  fs.writeFile("result.html", content, function (error) {
     if (error != null) {
       console.log(error);
     } else {
@@ -76,9 +77,9 @@ function scrapeAmazonDeals(Runtime, client) {
 
     setTimeout(function () {
       Runtime.evaluate({ expression: expression, returnByValue: true }).then((a) => {
-        writeToFile(JSON.stringify(a.result.value));
-        console.log(a.result.value.length);
-        //console.log(a.result.value);
+        //writeToFile(JSON.stringify(a.result.value));
+        writeToFile(table(a.result.value));
+        console.log("The amount of deals fetched: " + a.result.value.length);
         client.close();
       });
     }, 1000);
